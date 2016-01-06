@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Second Control: derivation of probability distributions</title>
+
+    <!-- Bootstrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+  </head>
+  <body>
+    <div class="container">
+
+      <div class="page-header">
+        <h1>Probabilities of outcomes of t-tests between three samples</h1>
+        <h2>under null hypothesis</h2>
+        <p class="lead">An appendix to the blog post.</p>
+      </div>
+
+      <p>The Twitter engineering blog post explaining the fallacy of trying to use two control buckets to limit false positives includes the following probability distribution tables of various statistical significance outcomes for an experiment containing three buckets, A1 (control), A2 (control), and B (treatment), where B is drawn from the same underlying distribution as both controls -- the null hypothesis is true.</p>
+     <p>In this appendix, we provide the analytical derivation of these probabilities.</p>
+     <div class="center-block">
+       <img src="images/purpleplot.png" width=706 height=340 class="img-responsive center-block" alt="probability distributions of statistical siginficance testing outcomes when 3 buckets come from same underlying distribution">
+    </div>
+
+	<p>Numbers in the purple table are derived using  Proposition 2, which we prove below. Here, X, Y, and Z refer to our three buckets -- control A1, control A2, and treatment B.</p>
+
+	<p><strong>Proposition 2</strong> provides the asymptotic joint distribution of the three t statistics when
+		<ol>
+ 	 		<li>X, Y and Z are sampled with equal probability from the total population, for example, 5%, 5% and 5%. </li>
+			<li>X, Y and Z share the same distribution mean and distribution variance. </li>
+		</ol>
+	</p>
+
+	<p>From there we numerically calculate the conditional distributions under the cases X=Y, X&gt;Y and X&lt;Y respectively (as is shown in the purple table). For other cases, the table can be derived using <strong>Proposition 1</strong>. </p>
+
+
+	<p><strong>Lemma 1</strong> : If X<sub>n</sub> converges in distribution to a constant C, then X<sub>n</sub> converges in probability to C.</p>
+
+	<p><strong>Lemma 2 (Slutsky Theorem)</strong> : Let {X<sub>n</sub>}, {Y<sub>n</sub>} be sequences of scalar/vector/matrix random variables.</p>
+	
+	<p>If X<sub>n</sub> converges in distribution to a random element X and Y<sub>n</sub> converges in probability to a nonzero constant C, then X<sub>n</sub>/Y<sub>n</sub> converges in distribution to X/C.</p>
+	
+	<p><strong>Proposition 1</strong>: X,Y,Z are independent distributions sharing the same mean and they have standard deviations 0 &lt;&sigma; <sub>1</sub>, &sigma;<sub>2</sub>, &sigma;<sub>3</sub> &lt; &infin;. Draw n<sub>1</sub>, n<sub>2</sub>, n<sub>3</sub> samples from each of them independently. Denote s<sub>1</sub>, s<sub>2</sub>, s<sub>3</sub> to be the sample variance of X,Y,Zand X&oline;, Y&oline;, Z&oline; to be the sample mean.  If there exists n, R<sub>1</sub>, RM<sub>2</sub> and R<sub>3</sub> such that</p>
+	<img src="images/proof_formula_1.png" height="92" width="627"/>
+	<p>we have the following weak convergence:</p>
+	<img src="images/proof_formula_2.png" height=159 width=800/>
+	
+
+	<p><em>Proof</em>: For any -&infin; &lt; a,b,c &lt;, using the independency between X&oline;, Y&oline;, Z&oline; and central limit theorem, </p>
+	 <img src="images/proof_formula_3.png" height=250 width=800/>,
+	<p>
+	Therefore, by the definition of weak convergence (w.c.),</p>
+
+	<p>Function  <img src="images/proof_formula_4.png" height=66 width=150>
+	is not hard to see to be a continuous function. According to the property of weakly convergence,</p>  
+	<img src="images/proof_formula_5.png" height=74 width=800/>,
+	
+	<p>For  i&isin;{1,2,3} , by central limit theorem, <img src="images/proof_formula_6.png" height=47 width=150> in distribution. The chi square distribution has mean n<sub>i</sub>-1 and variance 2<sub>n<sub>i</sub></sub>-2. Hence, <img src="images/proof_formula_7.png" height=34 width=82> in distribution. From Lemma 1, s<sub>i</sub> converges in probability to &sigma;<sub>i</sub> because mean converges to 1 and variance converges to 0. From that, we have <img src="images/proof_formula_8.png" height=60 width=246/></p>
+	
+
+	<p>Apply Slutsky Theorem to the above two convergences, </p>
+	<img src="images/proof_formula_9.png" height=167 width=800>
+	
+	<p><strong>QED</strong>.</p>
+
+	<p><strong>Proposition 2</strong>: X,Y,Z are independent distributions sharing the same mean  and they have standard deviations 0 &lt;&sigma; <sub>1</sub>, &sigma;<sub>2</sub>, &sigma;<sub>3</sub> &lt; &infin;. Draw n<sub>1</sub>, n<sub>2</sub>, n<sub>3</sub> samples from each of them independently,  let n=n<sub>1</sub>+n<sub>2</sub>+n<sub>3</sub>, if</p>
+	<img src="images/proof_formula_10.png" height=38 width=399>,
+	
+	<p>Denote s<sub>1</sub>, s<sub>2</sub>, s<sub>3</sub> to be the sample variance of the samples and</p>
+	<img src="images/proof_formula_11.png" height=207 width=250>,
+	
+	<p>Then when &sigma;<sub>1</sub> = &sigma;<sub>2</sub> = &sigma;<sub>3</sub> and R<sub>1</sub> = R<sub>2</sub> = R<sub>3</sub>, then</p>
+	<img src="images/proof_formula_12.png" height=79 width=429>
+	<p>and</p>
+	<img src="images/proof_formula_13.png" height=79 width=500>
+
+
+	<p><em>Proof</em>:<br>
+		To prove the first convergence, simply cancel out the &sigma;’s and R’s from the results of Proposition 1 given the assumption of R<sub>i</sub> and &sigma;<sub>i</sub>.<br>
+		The second convergence is trivial given the first convergence.
+	</p> 
+	
+	<p><strong>QED</strong>.</p>
+
+	<p>Now let’s calculate the top right cube of “Control=Control2” case. Other probabilities in the tables can be calculated in a similar way via Proposition 2:</p>
+
+	<IMG src="images/purple_table_controls_non_sig.png" width=288 height=300/>
+
+	<p>Define<p>
+	<IMG src="images/proof_formula_14.png" height=46 width=196/>
+	<p>From Proposition 2</p>
+	<img src="images/proof_formula_15.png" height=46 width=237/>
+	<p>Therefore</p>
+	<img src="images/proof_formula_16.png" height=317 width=800/>,
+
+	<p>where &phi; is the density function of standard normal distribution</p>.
+  </div>
+</body>
+</html>
